@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bộ thủ thiên nhiên</title>
+<style>
+:root{
+  --paper:#faf6ef; --ink:#2b2620; --muted:#8a7d6c;
+  --line:#e8dcc8; --accent:#4a7c3a; --accent-soft:#dcebd4;
+  --cjk:"Noto Serif CJK SC","Songti SC","PingFang SC","Microsoft YaHei",serif;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+     background:var(--paper);color:var(--ink);line-height:1.5}
+main{max-width:620px;margin:0 auto;padding:24px 18px 56px}
+h1{font-size:.9rem;font-weight:600;margin:0 0 16px;text-align:center;
+   color:var(--muted);letter-spacing:.14em;text-transform:uppercase}
+
+.stage{background:#fff;border-radius:26px;padding:10px;
+       border:1.5px solid var(--line);overflow:hidden;
+       box-shadow:0 8px 32px rgba(74,124,58,.08)}
+svg#fig{width:100%;height:auto;display:block}
+
+.hotspot{cursor:pointer;outline:none;
+  transform-box:fill-box;transform-origin:center;
+  transition:transform .22s cubic-bezier(.34,1.56,.64,1)}
+.hotspot:hover{transform:scale(1.14)}
+.hotspot circle{
+  fill:url(#spot);stroke:var(--accent);stroke-width:1.8;
+  filter:drop-shadow(0 2px 4px rgba(74,124,58,.28));
+  transition:fill .2s,stroke-width .2s;
+}
+.hotspot .glyph{
+  font-family:var(--cjk);font-size:20px;fill:var(--ink);
+  text-anchor:middle;dominant-baseline:central;
+  pointer-events:none;transition:fill .2s;
+}
+.hotspot.sel{transform:scale(1.14)}
+.hotspot.sel circle{fill:var(--accent);stroke:#2e5224;stroke-width:2.5}
+.hotspot.sel .glyph{fill:#fff}
+.hotspot:focus-visible circle{stroke-width:4}
+
+.card{background:#fff;border-radius:26px;border:1.5px solid var(--line);
+      padding:28px 20px 26px;margin-top:14px;text-align:center;min-height:280px;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      box-shadow:0 8px 32px rgba(74,124,58,.08)}
+.card .icon{font-size:76px;line-height:1;margin-bottom:12px;
+             filter:drop-shadow(0 4px 10px rgba(0,0,0,.12))}
+.card .glyph{font-family:var(--cjk);font-size:62px;line-height:1;
+             color:var(--accent);margin-bottom:4px}
+.card .variant{font-family:var(--cjk);font-size:.95rem;color:var(--muted);
+               margin-bottom:6px}
+.card .pron{font-size:1.3rem;margin:0 0 2px;letter-spacing:.02em}
+.card .pron .hv{color:var(--muted);margin-left:8px;font-size:1rem;letter-spacing:0}
+.card .meaning{font-size:1.3rem;font-weight:600;margin:0 0 20px;
+               color:var(--accent)}
+.card .examples{display:flex;gap:22px;justify-content:center;flex-wrap:wrap}
+.card .ex{display:flex;flex-direction:column;align-items:center;gap:1px;
+          padding:8px 12px;border-radius:12px;background:#fdfaf5;
+          border:1px solid var(--line)}
+.card .ex .c{font-family:var(--cjk);font-size:28px;line-height:1.15}
+.card .ex .hv{font-size:.7rem;color:var(--muted)}
+.card .ex .m{font-size:.78rem}
+.card .hint{color:var(--muted);font-size:1.1rem}
+</style>
+</head>
+<body>
+<main>
+  <h1>Bộ thủ thiên nhiên</h1>
+
+  <section class="stage">
+    <svg id="fig" viewBox="0 0 500 400" role="img" aria-label="Sơ đồ thiên nhiên">
+      <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#a8d4e8"/>
+          <stop offset="55%" stop-color="#f0d4b0"/>
+          <stop offset="100%" stop-color="#f5b880"/>
+        </linearGradient>
+        <radialGradient id="sunG" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#fffbe0"/>
+          <stop offset="60%" stop-color="#ffd23f"/>
+          <stop offset="100%" stop-color="#ff9020"/>
+        </radialGradient>
+        <radialGradient id="moonG" cx="40%" cy="40%" r="70%">
+          <stop offset="0%" stop-color="#fffbe8"/>
+          <stop offset="100%" stop-color="#e8d0a0"/>
+        </radialGradient>
+        <linearGradient id="mount1" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#8a7a6a"/>
+          <stop offset="100%" stop-color="#5a4838"/>
+        </linearGradient>
+        <linearGradient id="mount2" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#b0a090"/>
+          <stop offset="100%" stop-color="#806a5a"/>
+        </linearGradient>
+        <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#9bc47a"/>
+          <stop offset="30%" stop-color="#6d8f4a"/>
+          <stop offset="100%" stop-color="#5a3e28"/>
+        </linearGradient>
+        <linearGradient id="river" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#8fd0e8"/>
+          <stop offset="100%" stop-color="#3a90c5"/>
+        </linearGradient>
+        <linearGradient id="trunk" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#5a3a22"/>
+          <stop offset="100%" stop-color="#7a4f30"/>
+        </linearGradient>
+        <radialGradient id="foliage" cx="40%" cy="35%" r="65%">
+          <stop offset="0%" stop-color="#9fd47b"/>
+          <stop offset="100%" stop-color="#4a7a3a"/>
+        </radialGradient>
+        <radialGradient id="fireG" cx="50%" cy="80%" r="60%">
+          <stop offset="0%" stop-color="#fff5b0"/>
+          <stop offset="40%" stop-color="#ffb84d"/>
+          <stop offset="80%" stop-color="#e85a1a"/>
+          <stop offset="100%" stop-color="#a52a0a"/>
+        </radialGradient>
+        <radialGradient id="rockG" cx="35%" cy="30%" r="70%">
+          <stop offset="0%" stop-color="#b8b8b8"/>
+          <stop offset="100%" stop-color="#5c5c5c"/>
+        </radialGradient>
+        <radialGradient id="spot" cx="35%" cy="30%" r="70%">
+          <stop offset="0%" stop-color="#fff"/>
+          <stop offset="100%" stop-color="#f2f6ed"/>
+        </radialGradient>
+        <filter id="blur"><feGaussianBlur stdDeviation="4"/></filter>
+        <filter id="blur2"><feGaussianBlur stdDeviation="8"/></filter>
+      </defs>
+
+      <!-- bầu trời -->
+      <rect width="500" height="400" fill="url(#sky)"/>
+
+      <!-- mặt trời -->
+      <circle cx="80" cy="60" r="50" fill="#ffcc4d" opacity="0.32" filter="url(#blur2)"/>
+      <circle cx="80" cy="60" r="30" fill="url(#sunG)"/>
+
+      <!-- mặt trăng -->
+      <circle cx="420" cy="60" r="26" fill="url(#moonG)"/>
+      <circle cx="413" cy="52" r="4" fill="#d4c498" opacity="0.55"/>
+      <circle cx="427" cy="70" r="3" fill="#d4c498" opacity="0.55"/>
+      <circle cx="425" cy="48" r="2.5" fill="#d4c498" opacity="0.55"/>
+
+      <!-- núi xa (bên phải) -->
+      <path d="M340 270 L430 150 L520 270 Z" fill="url(#mount2)"/>
+
+      <!-- núi chính -->
+      <path d="M100 280 L230 110 L360 280 Z" fill="url(#mount1)"/>
+      <path d="M195 158 L230 110 L265 158 L248 148 L230 160 L212 148 Z"
+            fill="#fff" opacity="0.88"/>
+
+      <!-- mặt đất -->
+      <path d="M0 280 Q250 265 500 280 L500 400 L0 400 Z" fill="url(#ground)"/>
+
+      <!-- cây -->
+      <rect x="60" y="195" width="20" height="110" fill="url(#trunk)" rx="3"/>
+      <circle cx="70" cy="175" r="46" fill="url(#foliage)"/>
+      <circle cx="40" cy="195" r="34" fill="url(#foliage)"/>
+      <circle cx="100" cy="195" r="34" fill="url(#foliage)"/>
+      <circle cx="70" cy="145" r="32" fill="url(#foliage)"/>
+
+      <!-- sông -->
+      <path d="M280 300 Q340 305 400 340 Q450 365 500 385"
+            stroke="url(#river)" stroke-width="45" stroke-linecap="round" fill="none"/>
+      <path d="M280 300 Q340 305 400 340 Q450 365 500 385"
+            stroke="#b8e8f5" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.5"/>
+
+      <!-- đá -->
+      <ellipse cx="105" cy="355" rx="34" ry="20" fill="url(#rockG)"/>
+      <path d="M85 350 Q100 332 118 345 L122 360 Q100 362 85 350 Z"
+            fill="#cfcfcf" opacity="0.4"/>
+
+      <!-- lửa trại -->
+      <line x1="180" y1="362" x2="222" y2="348" stroke="#5a3a22" stroke-width="9" stroke-linecap="round"/>
+      <line x1="180" y1="348" x2="222" y2="362" stroke="#5a3a22" stroke-width="9" stroke-linecap="round"/>
+      <circle cx="200" cy="340" r="30" fill="#ffb84d" opacity="0.35" filter="url(#blur)"/>
+      <path d="M200 350 Q182 330 192 300 Q198 315 202 295 Q207 315 212 300 Q222 330 200 350 Z"
+            fill="url(#fireG)"/>
+      <path d="M200 343 Q192 327 197 313 Q202 322 206 311 Q212 326 200 343 Z"
+            fill="#fff5b0" opacity="0.85"/>
+
+      <g id="hotspots"></g>
+    </svg>
+  </section>
+
+  <section class="card" id="card"></section>
+</main>
+
+<script>
+const NS = "http://www.w3.org/2000/svg";
+
+/* ==== 8 bộ thủ thiên nhiên (giản thể) ==== */
+const RADICALS = {
+  ri:   {glyph:"日", variant:"",   pinyin:"rì",   hv:"nhật", meaning:"mặt trời, ngày",  icon:"☀️",
+         ex:[{c:"明",hv:"minh",m:"sáng"},{c:"晚",hv:"vãn",m:"tối"},{c:"时",hv:"thời",m:"giờ"}]},
+  yue:  {glyph:"月", variant:"",   pinyin:"yuè",  hv:"nguyệt", meaning:"mặt trăng, tháng", icon:"🌙",
+         ex:[{c:"期",hv:"kỳ",m:"kỳ hạn"},{c:"朝",hv:"triêu",m:"sớm"},{c:"朗",hv:"lãng",m:"sáng sủa"}]},
+  mu:   {glyph:"木", variant:"",   pinyin:"mù",   hv:"mộc", meaning:"cây, gỗ",         icon:"🌳",
+         ex:[{c:"林",hv:"lâm",m:"rừng"},{c:"果",hv:"quả",m:"quả"},{c:"森",hv:"sâm",m:"rừng rậm"}]},
+  shui: {glyph:"水", variant:"氵", pinyin:"shuǐ", hv:"thủy", meaning:"nước",          icon:"💧",
+         ex:[{c:"河",hv:"hà",m:"sông"},{c:"海",hv:"hải",m:"biển"},{c:"洗",hv:"tẩy",m:"rửa"}]},
+  huo:  {glyph:"火", variant:"灬", pinyin:"huǒ",  hv:"hỏa", meaning:"lửa",            icon:"🔥",
+         ex:[{c:"热",hv:"nhiệt",m:"nóng"},{c:"烧",hv:"thiêu",m:"đốt"},{c:"灯",hv:"đăng",m:"đèn"}]},
+  shan: {glyph:"山", variant:"",   pinyin:"shān", hv:"sơn", meaning:"núi",            icon:"⛰️",
+         ex:[{c:"岁",hv:"tuế",m:"tuổi"},{c:"峰",hv:"phong",m:"đỉnh núi"},{c:"岛",hv:"đảo",m:"đảo"}]},
+  shi:  {glyph:"石", variant:"",   pinyin:"shí",  hv:"thạch", meaning:"đá",           icon:"🪨",
+         ex:[{c:"研",hv:"nghiên",m:"nghiên cứu"},{c:"硬",hv:"ngạnh",m:"cứng"},{c:"碗",hv:"uyển",m:"bát"}]},
+  tu:   {glyph:"土", variant:"",   pinyin:"tǔ",   hv:"thổ", meaning:"đất",            icon:"🟫",
+         ex:[{c:"地",hv:"địa",m:"đất"},{c:"场",hv:"trường",m:"sân"},{c:"城",hv:"thành",m:"thành"}]}
+};
+
+/* ==== vị trí trên phong cảnh ==== */
+const SPOTS = [
+  {id:"ri",   x:80,  y:60,  r:17},   /* mặt trời */
+  {id:"yue",  x:420, y:60,  r:16},   /* mặt trăng */
+  {id:"shan", x:250, y:175, r:18},   /* núi */
+  {id:"mu",   x:70,  y:230, r:18},   /* cây */
+  {id:"tu",   x:30,  y:380, r:16},   /* đất */
+  {id:"shi",  x:105, y:355, r:16},   /* đá */
+  {id:"huo",  x:200, y:340, r:18},   /* lửa */
+  {id:"shui", x:420, y:355, r:16}    /* nước */
+];
+
+const panel    = document.getElementById("card");
+const svgSpots = document.getElementById("hotspots");
+
+SPOTS.forEach(s => {
+  const r = RADICALS[s.id];
+  const g = document.createElementNS(NS,"g");
+  g.setAttribute("class","hotspot");
+  g.setAttribute("tabindex","0");
+  g.setAttribute("role","button");
+  g.setAttribute("aria-label", r.pinyin + " " + r.hv);
+  g.dataset.id = s.id;
+
+  const c = document.createElementNS(NS,"circle");
+  c.setAttribute("cx",s.x); c.setAttribute("cy",s.y); c.setAttribute("r",s.r);
+
+  const t = document.createElementNS(NS,"text");
+  t.setAttribute("class","glyph");
+  t.setAttribute("x",s.x); t.setAttribute("y",s.y);
+  t.textContent = r.glyph;
+
+  g.append(c,t);
+  g.addEventListener("click", () => select(s.id));
+  g.addEventListener("keydown", e => {
+    if(e.key==="Enter"||e.key===" "){ e.preventDefault(); select(s.id); }
+  });
+  svgSpots.appendChild(g);
+});
+
+function select(id){
+  document.querySelectorAll(".hotspot").forEach(el =>
+    el.classList.toggle("sel", el.dataset.id === id));
+  renderCard(id);
+}
+
+function renderCard(id){
+  const r = RADICALS[id];
+  panel.innerHTML = `
+    <div class="icon">${r.icon}</div>
+    <div class="glyph">${r.glyph}</div>
+    ${r.variant ? `<div class="variant">biến thể: ${r.variant}</div>` : ""}
+    <p class="pron">${r.pinyin}<span class="hv">· ${r.hv}</span></p>
+    <p class="meaning">${r.meaning}</p>
+    <div class="examples">
+      ${r.ex.map(x => `
+        <div class="ex">
+          <span class="c">${x.c}</span>
+          <span class="hv">${x.hv}</span>
+          <span class="m">${x.m}</span>
+        </div>`).join("")}
+    </div>`;
+}
+
+panel.innerHTML = `<p class="hint">👆 Chạm vào một bộ thủ trên phong cảnh</p>`;
+</script>
+</body>
+</html>
